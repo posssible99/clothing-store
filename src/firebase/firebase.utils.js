@@ -44,6 +44,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
 firebase.initializeApp(config);
 
+// To activate google sign up
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 

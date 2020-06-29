@@ -30,7 +30,6 @@ class App extends React.Component {
             // We pass the other properties, like email,etc
             ...snapShot.data(),
           });
-          console.log(this.state);
         });
       } else {
         this.setState({ currentUser: userAuth });
