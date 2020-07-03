@@ -20,7 +20,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
   //   We get a object with data, but the most important parameter is exists.(this is a document reference)
   const userRef = firestore.doc(`users/${userAuth.uid}`);
-  // A snapshShot is a object that conatins data of a doc of a collection
+  // A snapshShot is a object that conatins data of a doc of a collection, inside snapShot is the parameter exists
   const snapShot = await userRef.get();
   if (!snapShot.exists) {
     //   The user doesn't exist, so we need some info to create our user.

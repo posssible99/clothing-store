@@ -23,7 +23,7 @@ class SignUp extends React.Component {
       return;
     }
     try {
-      // This gives us a userAuth object(that contains a user id associated to the email and the password)
+      // This gives us a userAuth object(that contains a user id associated to the email and the password), but we only need the parameter user because it haves our data.
       const { user } = await auth.createUserWithEmailAndPassword(
         email,
         password
