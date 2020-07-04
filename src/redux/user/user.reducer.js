@@ -1,3 +1,6 @@
+// Change the string to another file, only because we want to avoid type errors
+import { UserActionTypes } from "./user.types";
+
 const INITIAL_STATE = {
   currentUser: null,
 };
@@ -5,7 +8,7 @@ const INITIAL_STATE = {
 // Everytime state is undefined,is going to have the value of null(this occurs when the user visits for the first time the page).
 const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case "SET_CURRENT_USER":
+    case UserActionTypes.SET_CURRENT_USER:
       // WE need to return an object beacuse if not it will not rerender
       return {
         // We give it all the properties that the state have before.

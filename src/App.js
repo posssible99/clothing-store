@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import "./App.css";
 import HomePage from "./pages/homepage/homepage.component";
 import ShopPage from "./components/shop/shop.component";
@@ -51,12 +51,29 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/shop" component={ShopPage} />
-          <Route path="/signin" component={SignInAndSignUpPage} />
+          {/* if we want to make an if statement to know what component render, we can use render */}
+          <Route
+            exact
+            path="/signin"
+            render={() =>
+              this.props.currentUser ? (
+                <Redirect to="/" />
+              ) : (
+                <SignInAndSignUpPage />
+              )
+            }
+          />
         </Switch>
       </div>
     );
   }
 }
+
+// We want to give to our component the value of currentUser from the store.(it will be in the props of the component)
+// We deconstruc user from the store object
+const mapStateProps = ({ user }) => ({
+  currentUser: user.currentUser,
+});
 
 // if we wan to change things in he store,we need to do this.
 // !!The only way to trigger a state change is with dispatch,dispatch need a object as an argument, that contains the action.
@@ -73,5 +90,5 @@ const mapDispatchProps = (dispatch) => ({
 
 // Each field in the object will become a separate prop for your own component, and the value should normally be a function that dispatches an action when called.
 // The connect() function connects a React component to a Redux store
-export default connect(null, mapDispatchProps)(App);
+export default connect(mapStateProps, mapDispatchProps)(App);
 // This will let us access to our methods to change the state, like setCurrentUser(), this will be in the props object
