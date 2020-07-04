@@ -7,6 +7,7 @@ const INITIAL_STATE = {
 
 // Everytime state is undefined,is going to have the value of null(this occurs when the user visits for the first time the page).
 const userReducer = (state = INITIAL_STATE, action) => {
+  // action have two properties, type and payload
   switch (action.type) {
     case UserActionTypes.SET_CURRENT_USER:
       // WE need to return an object beacuse if not it will not rerender

@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 import { auth } from "../../firebase/firebase.utils";
 import { ReactComponent as Logo } from "../../assets/original.svg";
 import { connect } from "react-redux";
+import CartIcon from "../cart-icon/cart-icon.component";
+import CartDropdown from "../cart-dropdown/cart-dropdown.component";
 
 import "./header.styles.scss";
 
-const Header = ({ currentUser }) => (
+const Header = ({ currentUser, hidden }) => (
   <div className="header">
     <Link className="logo-container" to="/">
       <Logo className="logo" />
@@ -27,15 +29,19 @@ const Header = ({ currentUser }) => (
           SIGN IN
         </Link>
       )}
+      <CartIcon />
     </div>
+    {hidden ? null : <CartDropdown />}
   </div>
 );
 
 // This is how we give data to a component with redux. It returns a object with the data we need, and it give it to the component as a prop properties.
-const mapStateToProps = (state) => ({
+// multiple destructuring
+const mapStateToProps = ({ user: { currentUser }, cart: { hidden } }) => ({
   // state is from the rooter-reducer
   // This is the property we are searching for header
-  currentUser: state.user.currentUser,
+  currentUser,
+  hidden,
 });
 
 // We use connect when we need properties from the reducers, it returns a Higher order component
