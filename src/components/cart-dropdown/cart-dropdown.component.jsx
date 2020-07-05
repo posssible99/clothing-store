@@ -8,6 +8,7 @@ import "./cart-dropdown.styles.scss";
 const CartDropdown = ({ cartItems }) => (
   <div className="cart-dropdown">
     <div className="cart-items">
+      {/* We generate a new array with the CartItem component for each element */}
       {cartItems.map((cartItem) => (
         <CartItem key={cartItem.id} item={cartItem} />
       ))}
