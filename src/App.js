@@ -13,7 +13,6 @@ class App extends React.Component {
   unsuscribeFromAuth = null;
 
   componentDidMount() {
-    console.log(this.props);
     const { setCurrentUser } = this.props;
     // This give us a function that when we call, it closes the suscription(componentWillUnmount).
     // auth.onAuthStateChanged is like a listener, when the user log in or log out it's triggered.

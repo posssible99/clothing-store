@@ -11,6 +11,7 @@ const CartIcon = ({ toggleCartHidden }) => (
   </div>
 );
 
+// We give to our component the function  togg..., so it can change the state of hidden.
 const mapDispatchProps = (dispatch) => ({
   toggleCartHidden: () => dispatch(toggleCartHidden()),
 });
