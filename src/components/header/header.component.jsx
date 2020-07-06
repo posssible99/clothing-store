@@ -5,6 +5,9 @@ import { ReactComponent as Logo } from "../../assets/original.svg";
 import { connect } from "react-redux";
 import CartIcon from "../cart-icon/cart-icon.component";
 import CartDropdown from "../cart-dropdown/cart-dropdown.component";
+import { createStructuredSelector } from "reselect";
+import { selectCartHidden } from "../../redux/cart/cart.selectors";
+import { selectCurrentUser } from "../../redux/user/user.selectors";
 
 import "./header.styles.scss";
 
@@ -37,11 +40,12 @@ const Header = ({ currentUser, hidden }) => (
 
 // This is how we give data to a component with redux. It returns a object with the data we need, and it give it to the component as a prop properties.
 // multiple destructuring
-const mapStateToProps = ({ user: { currentUser }, cart: { hidden } }) => ({
+// With createStructuredSelector,we dont need to pass the state in each property.
+const mapStateToProps = createStructuredSelector({
   // state is from the rooter-reducer
   // This is the property we are searching for header
-  currentUser,
-  hidden,
+  currentUser: selectCurrentUser,
+  hidden: selectCartHidden,
 });
 
 // We use connect when we need properties from the reducers, it returns a Higher order component

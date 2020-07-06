@@ -19,4 +19,6 @@ const MenuItem = ({ title, imageUrl, size, linkUrl, history, match }) => (
     </div>
   </div>
 );
+
+// withRouter gives to our component the property of history, it helps us to redirect a user.
 export default withRouter(MenuItem);

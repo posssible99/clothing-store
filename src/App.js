@@ -2,12 +2,15 @@ import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import "./App.css";
 import HomePage from "./pages/homepage/homepage.component";
-import ShopPage from "./components/shop/shop.component";
+import ShopPage from "./pages/shop/shop.component";
 import SignInAndSignUpPage from "./components/sign-in-sign-up/sign-in-sign-up.component";
 import Header from "./components/header/header.component";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import { connect } from "react-redux";
 import { setCurrentUser } from "./redux/user/user.actions";
+import { selectCurrentUser } from "./redux/user/user.selectors";
+import { createStructuredSelector } from "reselect";
+import CheckoutPage from "./pages/checkout/checkout.component";
 
 class App extends React.Component {
   unsuscribeFromAuth = null;
@@ -50,6 +53,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/shop" component={ShopPage} />
+          <Route exact path="/checkout" component={CheckoutPage} />
           {/* if we want to make an if statement to know what component render, we can use render */}
           <Route
             exact
@@ -70,8 +74,9 @@ class App extends React.Component {
 
 // We want to give to our component the value of currentUser from the store.(it will be in the props of the component)
 // We deconstruc user from the store object
-const mapStateProps = ({ user }) => ({
-  currentUser: user.currentUser,
+// With createStructuredSelector,we dont need to pass the state in each property.
+const mapStateProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
 });
 
 // if we wan to change things in he store,we need to do this.
