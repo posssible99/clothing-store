@@ -55,6 +55,7 @@ class App extends React.Component {
           <Route path="/shop" component={ShopPage} />
           <Route exact path="/checkout" component={CheckoutPage} />
           {/* if we want to make an if statement to know what component render, we can use render */}
+          {/* This is how we deny to a user the loginPage beacue he has signedIn */}
           <Route
             exact
             path="/signin"
