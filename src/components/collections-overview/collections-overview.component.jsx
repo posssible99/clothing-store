@@ -20,3 +20,7 @@ const mapStateProps = createStructuredSelector({
 });
 
 export default connect(mapStateProps)(CollectionsOverview);
+
+// I think this component is only getting the data for the other components, is managing that stuff.
+// Remember overview: a short description of something that provides general information about it, but no details.
+// ! This is th proof that we need to create extensible code.
