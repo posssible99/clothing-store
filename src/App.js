@@ -20,7 +20,6 @@ class App extends React.Component {
     // This give us a function that when we call, it closes the suscription(componentWillUnmount).
     // auth.onAuthStateChanged is like a listener, when the user log in or log out it's triggered.
     this.unsuscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-      console.log(userAuth);
       if (userAuth) {
         // When we call the function create...(only for googleSignUp), if it's the first time the user sign up, we store the data of the user.
         // Remember that this function returns userRef, and we need to wait beacuase it's assynchronus
