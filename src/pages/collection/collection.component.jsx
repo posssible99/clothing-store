@@ -12,7 +12,7 @@ const CollectionPage = ({ collection }) => {
       <h2 className="title">{title}</h2>
       <div className="items">
         {items.map((item) => (
-          <CollectionItem key={items.id} item={item} />
+          <CollectionItem key={item.id} item={item} />
         ))}
       </div>
     </div>
@@ -20,9 +20,9 @@ const CollectionPage = ({ collection }) => {
 };
 
 // The second parameter, are the properties of this component.
-const mapStateProps = (state, ownProps) => ({
+const mapStateToProps = (state, ownProps) => ({
   // Here we pass the state, because the selector need both, it returns a function that need the state.Normally we only do this selectCollection(state).
   collection: selectCollection(ownProps.match.params.collectionId)(state),
 });
 
-export default connect(mapStateProps)(CollectionPage);
+export default connect(mapStateToProps)(CollectionPage);

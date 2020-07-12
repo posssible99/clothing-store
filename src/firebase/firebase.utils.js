@@ -18,9 +18,9 @@ const config = {
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!userAuth) return; //We expect a null.
 
-  //   We get a object with data, but the most important parameter is exists.(this is a document reference)
+  //   We get a object with data, but the most important parameter is user id(uid),documentQuery.
   const userRef = firestore.doc(`users/${userAuth.uid}`);
-  // A snapshShot is a object that conatins data of a doc of a collection, inside snapShot is the parameter exists
+  // A snapshShot is a object that conatins data of a doc or a collection, inside snapShot is the parameter exists
   const snapShot = await userRef.get();
   if (!snapShot.exists) {
     //   The user doesn't exist, so we need some info to create our user.
@@ -40,6 +40,44 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   }
   //   We return userRef beacuse we maybe use it again
   return userRef;
+};
+
+// This function helps us store collections in firestore.
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {
+  const collectionRef = firestore.collection(collectionKey);
+  // Watch let us make mutlipke requests, but if one fail, it cancel all the requests.
+  const batch = firestore.batch();
+  objectsToAdd.forEach((obj) => {
+    // We call to create a new object, in this object we have an id, that firebase gives us.
+    const newDocRef = collectionRef.doc();
+    // This will add to our database each collection(hats,jackets,etc) of our array.
+    batch.set(newDocRef, obj);
+  });
+  return await batch.commit();
+};
+
+export const convertCollectionsSnapshotToMap = (collections) => {
+  // The collectios.docs will return us an array with the collections(jackets,hats,etc), but it is only a reference, to obtain the data
+  // we need to call doc.data
+  const transformedCollection = collections.docs.map((doc) => {
+    const { title, items } = doc.data();
+    console.log(title);
+    // We need to give the form to the object that we want.
+    return {
+      routeName: encodeURI(title.toLowerCase()),
+      id: doc.id,
+      title,
+      items,
+    };
+  });
+  // This will gives us the final object that we want, just as shop.data.js, with the keys hat,jackets,etc.
+  return transformedCollection.reduce((accumulator, collection) => {
+    accumulator[collection.title.toLowerCase()] = collection;
+    return accumulator;
+  }, {});
 };
 
 firebase.initializeApp(config);

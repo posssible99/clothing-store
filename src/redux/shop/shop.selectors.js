@@ -12,7 +12,8 @@ export const selectCollections = createSelector(
 export const selectCollectionsForPreview = createSelector(
   [selectCollections],
   // This will return us an array that have in each element a collection(hats,jackets,etc)
-  (collections) => Object.keys(collections).map((key) => collections[key])
+  (collections) =>
+    collections ? Object.keys(collections).map((key) => collections[key]) : []
 );
 
 // This function will return us the collection that have the same id as the collectionUrlParam

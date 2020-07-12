@@ -19,6 +19,7 @@ class App extends React.Component {
     const { setCurrentUser } = this.props;
     // This give us a function that when we call, it closes the suscription(componentWillUnmount).
     // auth.onAuthStateChanged is like a listener, when the user log in or log out it's triggered.
+    // ! We can say that here is where we handle the store of a googleUser(googleSignUp)
     this.unsuscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
         // When we call the function create...(only for googleSignUp), if it's the first time the user sign up, we store the data of the user.
@@ -27,6 +28,7 @@ class App extends React.Component {
         // We obtain the snapshot object, where it's conatin the data of the user
         userRef.onSnapshot((snapShot) => {
           // This will be the payload(all the object)
+          // This will add our user to the state
           setCurrentUser({
             id: snapShot.id,
             // We pass the other properties, like email,etc
@@ -75,7 +77,7 @@ class App extends React.Component {
 // We want to give to our component the value of currentUser from the store.(it will be in the props of the component)
 // We deconstruc user from the store object
 // With createStructuredSelector,we dont need to pass the state in each property.
-const mapStateProps = createStructuredSelector({
+const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
 });
 
@@ -94,5 +96,5 @@ const mapDispatchProps = (dispatch) => ({
 
 // Each field in the object will become a separate prop for your own component, and the value should normally be a function that dispatches an action when called.
 // The connect() function connects a React component to a Redux store
-export default connect(mapStateProps, mapDispatchProps)(App);
+export default connect(mapStateToProps, mapDispatchProps)(App);
 // This will let us access to our methods to change the state, like setCurrentUser(), this will be in the props object
